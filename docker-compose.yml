@@ -1,0 +1,47 @@
+services:
+  conversion-frontend:
+    image: alicejasmine/cd-conversion-web:staging
+    ports:
+      - "5001:8080"
+    depends_on:
+      - conversion-backend
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+  
+  conversion-backend:
+    image: alicejasmine/cd-conversion-backend:staging
+    ports:
+      - "5002:8080"
+    depends_on:
+      - mariadb
+    labels:
+      - "com.centurylinklabs.watchtower.enable=true"
+
+  mariadb:
+    image: mariadb:latest
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: conversion_history
+      MYSQL_USER: myuser
+      MYSQL_PASSWORD: mypassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mariadb:/var/lib/mysql
+
+  watchtower:
+    image: containrrr/watchtower
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --debug --http-api-update
+    environment:
+      - WATCHTOWER_HTTP_API_TOKEN=mytoken
+      - WATCHTOWER_LABEL_ENABLE=true
+    labels:
+      - "com.centurylinklabs.watchtower.enable=false"
+    ports:
+      - 8080:8080
+
+volumes:
+  mariadb:
