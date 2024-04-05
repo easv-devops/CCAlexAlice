@@ -10,7 +10,7 @@ steps:
         from_secret: SonarQubeSecret
     commands:
       - dotnet sonarscanner begin
-        /k:"easv-devops_CDWeatherExampleAS_AY5mj14UEVvRW2O60EZ1"
+        /k:"easv-devops_CCAlexAlice_AY6uBrXxEVvRW2O60EdN"
         /d:sonar.host.url="http://sonar.setgo.dk:9000"
         /d:sonar.token="$SONARSECRET"
         /d:sonar.cs.vscoveragexml.reportsPaths=coverage.xml
