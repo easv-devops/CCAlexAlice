@@ -5,7 +5,7 @@ namespace CurrencyConverter
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             Dictionary<string, decimal> rates = new Dictionary<string, decimal>
             {

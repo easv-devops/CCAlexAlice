@@ -1,12 +1,12 @@
 services:
-  conversion-frontend:
-    image: alicejasmine/cd-conversion-web:staging
-    ports:
-      - "5001:8080"
-    depends_on:
-      - conversion-backend
-    labels:
-      - "com.centurylinklabs.watchtower.enable=true"
+  #conversion-frontend:
+    #image: alicejasmine/cd-conversion-web:staging
+    #ports:
+      #- "5001:8080"
+    #depends_on:
+      #- conversion-backend
+    #labels:
+      #- "com.centurylinklabs.watchtower.enable=true"
   
   conversion-backend:
     image: alicejasmine/cd-conversion-backend:staging
