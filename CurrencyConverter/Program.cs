@@ -1,48 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using CurrencyConverter;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
-namespace CurrencyConverter
+var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddSingleton<DatabaseService>();
+
+
+builder.Services.AddControllers();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+
+var app = builder.Build();
+
+if (app.Environment.IsDevelopment())
 {
-    class Program
-    {
-        public static void Main(string[] args)
-        {
-            Dictionary<string, decimal> rates = new Dictionary<string, decimal>
-            {
-                {"USD", 1m},
-                {"EUR", 0.93m},
-                {"GBP", 0.76m},
-                {"JPY", 130.53m},
-                {"AUD", 1.31m}
-            };
-
-            Console.WriteLine("Welcome to the Currency Converter!");
-            Console.WriteLine("Supported currencies: USD, EUR, GBP, JPY, AUD");
-            Console.Write("Enter the source currency: ");
-            string fromCurrency = Console.ReadLine().ToUpper();
-
-            Console.Write("Enter the target currency: ");
-            string toCurrency = Console.ReadLine().ToUpper();
-
-            Console.Write("Enter the amount to convert: ");
-            decimal amount = Convert.ToDecimal(Console.ReadLine());
-
-            if (!rates.ContainsKey(fromCurrency) || !rates.ContainsKey(toCurrency))
-            {
-                Console.WriteLine("Unsupported currency.");
-                return;
-            }
-
-            decimal convertedAmount = ConvertCurrency(amount, fromCurrency, toCurrency, rates);
-            Console.WriteLine($"{amount} {fromCurrency} is {convertedAmount} {toCurrency}.");
-        }
-
-        static decimal ConvertCurrency(decimal amount, string fromCurrency, string toCurrency, Dictionary<string, decimal> rates)
-        {
-            decimal rateToUSD = rates[fromCurrency];
-            decimal amountInUSD = amount / rateToUSD;
-            decimal targetRate = rates[toCurrency];
-            return amountInUSD * targetRate;
-        }
-    }
+    app.UseSwagger();
+    app.UseSwaggerUI();
 }
+
+//app.UseHttpsRedirection();
+//app.UseStaticFiles();
+
+//app.UseRouting();
+
+
+
+app.Run();   
