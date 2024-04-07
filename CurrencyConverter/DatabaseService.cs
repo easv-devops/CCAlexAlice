@@ -5,7 +5,7 @@ namespace CurrencyConverter;
 
 public class DatabaseService
 {
-    private MySqlConnection GetConnection()
+    private static MySqlConnection GetConnection()
     {
         var connection = new MySqlConnection("Server=localhost;Database=conversion_history;Uid=myuser;Pwd=mypassword;");
         connection.Open();
