@@ -7,7 +7,8 @@ public class DatabaseService
 {
     private static MySqlConnection GetConnection()
     {
-        var connection = new MySqlConnection("Server=localhost;Database=conversion_history;Uid=myuser;Pwd=mypassword;");
+        string connectionString = Utilities.GetConnectionString();
+        var connection = new MySqlConnection(connectionString);
         connection.Open();
         return connection;
     }
