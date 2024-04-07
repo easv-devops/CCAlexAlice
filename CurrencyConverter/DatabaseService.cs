@@ -13,7 +13,7 @@ public class DatabaseService
         return connection;
     }
 
-    public static History SaveConversion(string source, string target, float value, float result)
+    public History SaveConversion(string source, string target, float value, float result)
     {
         DateTime date = DateTime.Today;
         using var connection = GetConnection();
