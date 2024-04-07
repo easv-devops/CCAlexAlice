@@ -13,8 +13,17 @@ public class ConversionController:ControllerBase
     }
     [HttpPost]
     [Route("/api/conversion")]
-    public History Post([FromBody] ConversionDto dto)
+    public IActionResult  Post([FromBody] ConversionDto dto)
     {
-        return _dbService.SaveConversion(dto.Source,dto.Target,dto.Value,dto.Result);
+        try
+        {
+            var history = _dbService.SaveConversion(dto.Source, dto.Target, dto.Value, dto.Result);
+            return Ok(history);
+        }
+        catch(Exception e)
+        { 
+            Console.WriteLine($"An error occurred while saving the conversion: {e.Message}");
+            return StatusCode(500, "An error occurred while saving the conversion.");
+        }
     }
 }
