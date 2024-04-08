@@ -26,4 +26,12 @@ public class ConversionController:ControllerBase
             return StatusCode(500, "An error occurred while saving the conversion.");
         }
     }
+    
+    
+    [HttpGet]
+    [Route("/api/history")]
+    public IEnumerable<History> GetConversionHistory()
+    {
+        return _dbService.GetConversionHistory();
+    }
 }
