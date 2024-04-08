@@ -5,10 +5,12 @@ namespace CurrencyConverter;
 public class ConversionController:ControllerBase
 {
     private readonly DatabaseService _dbService;
+    private readonly ConversionService _conversionService;
 
-    public ConversionController(DatabaseService dbService)
+    public ConversionController(DatabaseService dbService, ConversionService conversionService)
     {
         _dbService = dbService;
+        _conversionService = conversionService;
 
     }
     [HttpPost]
@@ -17,7 +19,10 @@ public class ConversionController:ControllerBase
     {
         try
         {
-            var history = _dbService.SaveConversion(dto.Source, dto.Target, dto.Value, dto.Result);
+            decimal value = (decimal)dto.Value;
+            decimal convertedResult = _conversionService.ConvertCurrency(value, dto.Source, dto.Target);
+            float convertedResultFloat = Convert.ToSingle(convertedResult);
+            var history = _dbService.SaveConversion(dto.Source, dto.Target, dto.Value, convertedResultFloat);
             return Ok(history);
         }
         catch(Exception e)
