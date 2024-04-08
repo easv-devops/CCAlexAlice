@@ -24,4 +24,21 @@ public class DatabaseService
       
        
     }
+
+    public IEnumerable<History> GetConversionHistory()
+    {
+        string sql = $@"
+SELECT 
+  date as {nameof(History.ConversionDate)},
+       source as {nameof(History.Source)},
+    target as {nameof(History.Target)},
+    value as {nameof(History.Value)},
+      result as {nameof(History.Result)}
+
+FROM conversion_history.history;
+";
+        using var connection = GetConnection();
+            return connection.Query<History>(sql);
+        
+    }
 }
