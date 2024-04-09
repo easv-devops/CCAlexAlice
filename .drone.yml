@@ -3,6 +3,26 @@ type: docker
 name: integration
 
 steps:
+  - name: build
+    image: mcr.microsoft.com/dotnet/sdk
+    environment:
+      pgconn:
+        from_secret: sqlconn
+    commands:
+      - cd CurrencyConverter
+      - dotnet build
+
+  - name: test
+    image: mcr.microsoft.com/dotnet/sdk
+    environment:
+      pgconn:
+        from_secret: sqlconn
+    commands:
+      - cd tests
+      - dotnet test
+      
+      
+      
   - name: code-analysis
     image: boulundeasv/dotnet-sdk-with-java
     environment:
