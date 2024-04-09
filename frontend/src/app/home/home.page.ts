@@ -12,7 +12,9 @@ import {ModalController, ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(public modalController: ModalController, public toastController: ToastController, public fb: FormBuilder, public http: HttpClient, public dataService: DataService) {}
+  constructor(public modalController: ModalController, public toastController: ToastController, public fb: FormBuilder, public http: HttpClient, public dataService: DataService) {
+    this.getHistory();
+  }
 
   convert = this.fb.group({
     source: ['', [Validators.required]],
@@ -20,18 +22,23 @@ export class HomePage {
     value: ['', [Validators.required]]
   })
 
+  async getHistory() {
+    const call = this.http.get<History[]>('http://localhost:5000/api/history');
+    this.dataService.History = await firstValueFrom<History[]>(call);
+    console.log(this.dataService.History);
+  }
+
   async convertSubmit() {
       const observable = this.http.post<History>('http://localhost:5000/api/conversion', this.convert.getRawValue())
       const response = await firstValueFrom<History>(observable);
-
+      console.log(response);
       this.dataService.History.push(response);
 
       const toast = await this.toastController.create({
-        message: 'Match was created!',
+        message: 'Conversion ready!',
         duration: 1233,
         color: "success"
       })
       toast.present();
-      this.modalController.dismiss();
   }
 }

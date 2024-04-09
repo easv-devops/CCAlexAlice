@@ -53,12 +53,12 @@
       <ion-col size-sm="2" class="history">Value</ion-col>
       <ion-col size-sm="2" class="history">Result</ion-col>
     </ion-row>
-    <ion-row class="conversion">
-      <ion-col size-sm="2" class="history">Date</ion-col>
-      <ion-col size-sm="2" class="history">Source</ion-col>
-      <ion-col size-sm="2" class="history">Target</ion-col>
-      <ion-col size-sm="2" class="history">Value</ion-col>
-      <ion-col size-sm="2" class="history">Result</ion-col>
+    <ion-row class="conversion" *ngFor="let history of dataService.History">
+      <ion-col size-sm="2" class="history">{{history.conversionDate}}</ion-col>
+      <ion-col size-sm="2" class="history">{{history.source}}</ion-col>
+      <ion-col size-sm="2" class="history">{{history.target}}</ion-col>
+      <ion-col size-sm="2" class="history">{{history.value}}</ion-col>
+      <ion-col size-sm="2" class="history">{{history.result}}</ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
