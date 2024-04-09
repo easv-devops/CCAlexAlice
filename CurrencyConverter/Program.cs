@@ -20,6 +20,15 @@ app.UseRouting();
     app.UseSwagger();
     app.UseSwaggerUI();
 
+
+app.UseCors(options =>
+{
+    options.SetIsOriginAllowed(origin => true)
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .AllowCredentials();
+});
+
 app.MapControllers();
 
 app.Run();   
