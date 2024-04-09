@@ -15,7 +15,7 @@ public class ConversionController:ControllerBase
     }
     [HttpPost]
     [Route("/api/conversion")]
-    public IActionResult  Post([FromBody] ConversionDto dto)
+    public IActionResult Post([FromBody] ConversionDto dto)
     {
         try
         {
@@ -23,7 +23,7 @@ public class ConversionController:ControllerBase
             decimal convertedResult = _conversionService.ConvertCurrency(value, dto.Source, dto.Target);
             float convertedResultFloat = Convert.ToSingle(convertedResult);
             var history = _dbService.SaveConversion(dto.Source, dto.Target, dto.Value, convertedResultFloat);
-            return Ok(history);
+            return Created("/api/conversion", history);
         }
         catch(Exception e)
         { 
