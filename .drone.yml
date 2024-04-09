@@ -6,7 +6,7 @@ steps:
   - name: build
     image: mcr.microsoft.com/dotnet/sdk
     environment:
-      pgconn:
+      sqlconn:
         from_secret: sqlconn
     commands:
       - cd CurrencyConverter
@@ -15,7 +15,7 @@ steps:
   - name: test
     image: mcr.microsoft.com/dotnet/sdk
     environment:
-      pgconn:
+      sqlconn:
         from_secret: sqlconn
     commands:
       - cd tests
