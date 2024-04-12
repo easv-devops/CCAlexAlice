@@ -12,14 +12,6 @@ steps:
       - cd CurrencyConverter
       - dotnet build
 
-  - name: start-app
-    image: mcr.microsoft.com/dotnet/sdk
-    environment:
-      sqlconn:
-        from_secret: sqlconn
-    commands:
-      - cd CurrencyConverter
-      - dotnet run
         
   - name: test
     image: mcr.microsoft.com/dotnet/sdk
