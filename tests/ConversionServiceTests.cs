@@ -1,11 +1,8 @@
-﻿using System.Net.Http.Json;
+﻿
 using CurrencyConverter;
-using Dapper;
-using FluentAssertions;
-using MySqlConnector;
-using Newtonsoft.Json;
+
 using NUnit.Framework;
-using tests.model;
+
 
 namespace tests;
 
@@ -19,6 +16,7 @@ namespace tests;
         public void Setup()
         {
             _conversionService = new ConversionService();
+            
         }
 
         [Test]
@@ -52,7 +50,7 @@ namespace tests;
         }
 
         [Test]
-        public void ConvertCurrency_WithUnsupportedCurrency_ThrowsException()
+        public void ConvertCurrencyWithUnsupportedCurrencyThrowsException()
         {
             // Arrange
             decimal value = 100m;
@@ -64,6 +62,6 @@ namespace tests;
         } 
     
         
-    
+        
     
 }
