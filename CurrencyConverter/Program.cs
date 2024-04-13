@@ -20,6 +20,7 @@ app.UseRouting();
     app.UseSwagger();
     app.UseSwaggerUI();
 
+
 app.UseCors(options =>
 {
     options.SetIsOriginAllowed(origin => true)

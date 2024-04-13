@@ -39,3 +39,48 @@ steps:
       - dotnet build --no-incremental
       - dotnet-coverage collect "dotnet test" -f xml -o "coverage.xml"
       - dotnet sonarscanner end /d:sonar.token="$SONARSECRET"
+
+
+---
+
+kind: pipeline
+type: docker
+name: deliver
+depends_on:
+  - integration
+
+steps:
+  - name: publish api
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: DockerUsername
+      password:
+        from_secret: DockerPassword
+      context: src
+      dockerfile: src/CurrencyConverter/Dockerfile
+      repo: alicejasmine/cd-conversion-backend
+      tags:
+        - staging
+
+  - name: publish web
+    image: plugins/docker
+    settings:
+      username:
+        from_secret: DockerUsername
+      password:
+        from_secret: DockerPassword
+      context: src
+      dockerfile: src/frontend/Dockerfile
+      repo: alicejasmine/cd-conversion-web
+      tags:
+        - staging
+
+  - name: trigger update
+    image: curlimages/curl
+    commands:
+      - "curl --fail -X GET 'http://62.171.178.179:8080/v1/update' -H 'Authorization: Bearer mytoken'" # Must match the token defined in docker-compose.yml
+      - sleep 10
+    depends_on:
+      - publish api
+      - publish web
