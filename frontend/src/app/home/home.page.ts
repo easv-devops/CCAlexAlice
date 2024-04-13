@@ -4,7 +4,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { DataService } from 'src/data.service';
 import {History} from "../../models"
-import {ModalController, ToastController } from '@ionic/angular';
+import {ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -12,7 +12,7 @@ import {ModalController, ToastController } from '@ionic/angular';
 })
 export class HomePage {
 
-  constructor(public modalController: ModalController, public toastController: ToastController, public fb: FormBuilder, public http: HttpClient, public dataService: DataService) {
+  constructor(public toastController: ToastController, public fb: FormBuilder, public http: HttpClient, public dataService: DataService) {
     this.getHistory();
   }
 
@@ -25,7 +25,6 @@ export class HomePage {
   async getHistory() {
     const call = this.http.get<History[]>('http://localhost:5000/api/history');
     this.dataService.History = await firstValueFrom<History[]>(call);
-    console.log(this.dataService.History);
   }
 
   async convertSubmit() {
