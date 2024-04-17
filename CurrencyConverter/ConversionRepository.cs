@@ -3,8 +3,10 @@ using MySqlConnector;
 
 namespace CurrencyConverter;
 
-public class DatabaseService
+public class ConversionRepository:IConversionRepository
 {
+  
+    
     private static MySqlConnection GetConnection()
     {
         string connectionString = Utilities.GetConnectionString();

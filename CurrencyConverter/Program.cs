@@ -6,7 +6,8 @@ using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddSingleton<DatabaseService>();
+builder.Services.AddSingleton<IConversionRepository, ConversionRepository>();
+
 builder.Services.AddSingleton<ConversionService>();
 
 builder.Services.AddControllers();

@@ -2,41 +2,30 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CurrencyConverter;
 
-public class ConversionController:ControllerBase
+public class ConversionController : ControllerBase
 {
-    private readonly DatabaseService _dbService;
     private readonly ConversionService _conversionService;
 
-    public ConversionController(DatabaseService dbService, ConversionService conversionService)
+    public ConversionController(ConversionService conversionService)
     {
-        _dbService = dbService;
         _conversionService = conversionService;
-
     }
+
+
     [HttpPost]
     [Route("/api/conversion")]
-    public IActionResult Post([FromBody] ConversionDto dto)
+    public History Post([FromBody] ConversionDto dto)
     {
-        try
-        {
-            decimal value = (decimal)dto.Value;
-            decimal convertedResult = _conversionService.ConvertCurrency(value, dto.Source, dto.Target);
-            float convertedResultFloat = Convert.ToSingle(convertedResult);
-            var history = _dbService.SaveConversion(dto.Source, dto.Target, dto.Value, convertedResultFloat);
-            return Created("/api/conversion", history);
-        }
-        catch(Exception e)
-        { 
-            Console.WriteLine($"An error occurred while saving the conversion: {e.Message}");
-            return StatusCode(500, "An error occurred while saving the conversion.");
-        }
+        decimal convertedResult = _conversionService.ConvertCurrency((decimal)dto.Value, dto.Source, dto.Target);
+        float convertedResultFloat = Convert.ToSingle(convertedResult);
+        return _conversionService.SaveConversion(dto.Source, dto.Target, dto.Value, convertedResultFloat);
     }
-    
-    
+
+
     [HttpGet]
     [Route("/api/history")]
     public IEnumerable<History> GetConversionHistory()
     {
-        return _dbService.GetConversionHistory();
+        return _conversionService.GetHistory();
     }
 }
