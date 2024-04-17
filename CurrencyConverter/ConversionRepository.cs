@@ -22,9 +22,13 @@ public class ConversionRepository:IConversionRepository
        
         string sql = $@"INSERT INTO conversion_history.history(date, source,target, value, result) VALUES (@date, @source,@target,@value,@result)";
 
-        return connection.QueryFirstOrDefault<History>(sql, new {date,source, target, value, result });
-      
-       
+        var insertedConversion= connection.QueryFirstOrDefault<History>(sql, new {date,source, target, value, result });
+
+        if (insertedConversion == null)
+        { throw new InvalidOperationException("Failed to insert history into the database");
+        }
+
+        return insertedConversion;
     }
 
     public IEnumerable<History> GetConversionHistory()
