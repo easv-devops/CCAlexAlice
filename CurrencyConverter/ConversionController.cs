@@ -15,10 +15,18 @@ public class ConversionController : ControllerBase
     [HttpPost]
     [Route("/api/conversion")]
     public History Post([FromBody] ConversionDto dto)
+
     {
-        decimal convertedResult = _conversionService.ConvertCurrency((decimal)dto.Value, dto.Source, dto.Target);
-        float convertedResultFloat = Convert.ToSingle(convertedResult);
-        return _conversionService.SaveConversion(dto.Source, dto.Target, dto.Value, convertedResultFloat);
+        if (dto.Source != null && dto.Target != null)
+        {
+            decimal convertedResult = _conversionService.ConvertCurrency((decimal)dto.Value, dto.Source, dto.Target);
+            float convertedResultFloat = Convert.ToSingle(convertedResult);
+            return _conversionService.SaveConversion(dto.Source, dto.Target, dto.Value, convertedResultFloat);
+        }
+        else
+        {
+            throw new ArgumentException("Source or target is null");
+        }
     }
 
 
