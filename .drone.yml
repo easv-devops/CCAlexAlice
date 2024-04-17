@@ -61,7 +61,7 @@ steps:
       dockerfile: CurrencyConverter/Dockerfile
       repo: alicejasmine/cd-conversion-backend
       tags:
-        - staging
+        - latest
 
   - name: publish web
     image: plugins/docker
@@ -74,7 +74,7 @@ steps:
       dockerfile: frontend/Dockerfile
       repo: alicejasmine/cd-conversion-web
       tags:
-        - staging
+        - latest
 
   - name: trigger update
     image: curlimages/curl
