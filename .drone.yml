@@ -57,7 +57,7 @@ steps:
         from_secret: DockerUsername
       password:
         from_secret: DockerPassword
-      context: CurrencyConverter
+      context: .
       dockerfile: CurrencyConverter/Dockerfile
       repo: alicejasmine/cd-conversion-backend
       tags:
