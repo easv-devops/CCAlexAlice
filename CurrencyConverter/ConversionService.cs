@@ -28,7 +28,6 @@ public class ConversionService
 
     public History SaveConversion(string source, string target, float value, float convertedResultFloat)
     {
-        decimal convertedResult = ConvertCurrency((decimal)value, source, target);
         return _repo.SaveConversion(source, target, value, convertedResultFloat);
     }
     
