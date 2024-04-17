@@ -16,7 +16,7 @@ public static class Utilities
     
     public static string GetConnectionString()
     {
-        string connectionString = Environment.GetEnvironmentVariable(EnvironmentVariableName);
+        string? connectionString = Environment.GetEnvironmentVariable(EnvironmentVariableName);
         return connectionString ?? BuildConnectionString();
     }
     
