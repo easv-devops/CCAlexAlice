@@ -1,4 +1,6 @@
-﻿namespace CurrencyConverter;
+﻿using Monitoring;
+
+namespace CurrencyConverter;
 
 public class ConversionService
 
@@ -28,6 +30,7 @@ public class ConversionService
 
     public History SaveConversion(string source, string target, float value, float convertedResultFloat)
     {
+        MonitorService.Log.Debug("Entered Method SaveConversion");
         return _repo.SaveConversion(source, target, value, convertedResultFloat);
     }
     
@@ -36,8 +39,10 @@ public class ConversionService
 
     public decimal ConvertCurrency(decimal value, string source, string target)
     {
+        MonitorService.Log.Debug("Entered Method ConvertCurrency");
         if (!_rates.ContainsKey(source) || !_rates.ContainsKey(target))
         {
+            MonitorService.Log.Error("Error: unsupported currency");
             throw new InvalidOperationException("Unsupported currency.");
         }
 
@@ -49,6 +54,7 @@ public class ConversionService
         decimal rateTo = _rates[target];
         
         decimal convertedValue = (value / rateFrom) * rateTo;
+        MonitorService.Log.Information("value has been converted");
         return convertedValue;
     }
 }
