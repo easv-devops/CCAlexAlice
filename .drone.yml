@@ -69,6 +69,7 @@ steps:
         from_secret: DockerUsername
       password:
         from_secret: DockerPassword
+      context: frontend
       dockerfile: frontend/Dockerfile
       repo: alicejasmine/cd-conversion-web
       tags:
