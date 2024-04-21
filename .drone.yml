@@ -57,7 +57,6 @@ steps:
         from_secret: DockerUsername
       password:
         from_secret: DockerPassword
-      context: .
       dockerfile: CurrencyConverter/Dockerfile
       repo: alicejasmine/cd-conversion-backend
       tags:
@@ -70,7 +69,6 @@ steps:
         from_secret: DockerUsername
       password:
         from_secret: DockerPassword
-      context: frontend
       dockerfile: frontend/Dockerfile
       repo: alicejasmine/cd-conversion-web
       tags:
