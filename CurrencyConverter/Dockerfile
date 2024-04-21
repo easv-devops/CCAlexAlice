@@ -1,4 +1,4 @@
-﻿FROM mcr.microsoft.com/dotnet/sdk:8.0 AS base
+﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
@@ -10,9 +10,14 @@ WORKDIR "/src/CurrencyConverter"
 RUN dotnet build "CurrencyConverter.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "CurrencyConverter.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "CurrencyConverter/CurrencyConverter.csproj" -c Release -o /app/publish
 
-FROM base AS final
+
+FROM base AS runtime
 WORKDIR /app
-COPY --from=publish /app/publish .
+
+RUN dotnet publish "CurrencyConverter/CurrencyConverter.csproj" -c Release -o /app/publish
+
+
+FROM runtime AS final
 ENTRYPOINT ["dotnet", "CurrencyConverter.dll"]
