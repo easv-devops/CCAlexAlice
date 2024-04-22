@@ -83,3 +83,15 @@ steps:
     depends_on:
       - publish api
       - publish web
+        
+    
+  - name: update database
+    image: flyway/flyway
+    commands:
+      - flyway migrate
+        -url=jdbc:mariadb://62.171.178.179:3306/conversion_history
+        -user=myuser
+        -password=mypassword
+        -locations=filesystem:./db/sql
+    depends_on:
+      - trigger update  
