@@ -2,7 +2,7 @@ services:
   conversion-frontend:
     image: alicejasmine/cd-conversion-web:latest
     ports:
-      - "5001:8080"
+      - "5001:4200"
     depends_on:
       - conversion-backend
     labels:
