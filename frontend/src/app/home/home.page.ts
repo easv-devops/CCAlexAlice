@@ -23,12 +23,12 @@ export class HomePage {
   })
 
   async getHistory() {
-    const call = this.http.get<History[]>('http://62.171.178.179:5000/api/history');
+    const call = this.http.get<History[]>('http://62.171.178.179:5002/api/history');
     this.dataService.History = await firstValueFrom<History[]>(call);
   }
 
   async convertSubmit() {
-      const observable = this.http.post<History>('http://62.171.178.179:5000/api/conversion', this.convert.getRawValue())
+      const observable = this.http.post<History>('http://62.171.178.179:5002/api/conversion', this.convert.getRawValue())
       const response = await firstValueFrom<History>(observable);
       console.log(response);
       this.dataService.History.push(response);
