@@ -15,13 +15,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 
-var app = builder.Build();
-
-app.UseRouting();
-    app.UseSwagger();
-    app.UseSwaggerUI();
-
-
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAnyOrigin",
@@ -31,9 +24,13 @@ builder.Services.AddCors(options =>
 });
 
 
+var app = builder.Build();
 
 app.UseCors("AllowAnyOrigin");
 
+app.UseRouting();
+app.UseSwagger();
+app.UseSwaggerUI();
 app.MapControllers();
 
 
