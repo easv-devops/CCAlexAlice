@@ -22,13 +22,24 @@ app.UseRouting();
     app.UseSwaggerUI();
 
 
-app.UseCors(options =>
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://62.171.178.179:5001")
+            .AllowAnyMethod()
+            .AllowAnyHeader());
+});
+
+
+/*app.UseCors(options =>
 {
     options.SetIsOriginAllowed(origin => true)
         .AllowAnyMethod()
         .AllowAnyHeader()
         .AllowCredentials();
-});
+});*/
+
+app.UseCors("AllowOrigin");
 
 app.MapControllers();
 
