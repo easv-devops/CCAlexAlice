@@ -24,22 +24,15 @@ app.UseRouting();
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowOrigin",
-        builder => builder.WithOrigins("http://62.171.178.179:5001")
+    options.AddPolicy("AllowAnyOrigin",
+        builder => builder.AllowAnyOrigin()
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
 
 
-/*app.UseCors(options =>
-{
-    options.SetIsOriginAllowed(origin => true)
-        .AllowAnyMethod()
-        .AllowAnyHeader()
-        .AllowCredentials();
-});*/
 
-app.UseCors("AllowOrigin");
+app.UseCors("AllowAnyOrigin");
 
 app.MapControllers();
 
